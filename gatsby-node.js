@@ -12,18 +12,6 @@ exports.onPreBootstrap = ({ reporter }, options) => {
 exports.createPages = async ({ actions, graphql, reporter }, options) => {
   const { createPage } = actions
 
-  const basePath = options.basePath || '/'
-
-  createPage({
-    path: basePath,
-    component: require.resolve('./src/templates/home.tsx'),
-  })
-
-  createPage({
-    path: `/${basePath}/blog`.replace(/\/\/+/g, '/'),
-    component: require.resolve('./src/templates/blog.tsx'),
-  })
-
   const result = await graphql(`
     query {
       allMdx {
@@ -43,9 +31,9 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
   const posts = result.data.allMdx.nodes
 
   posts.forEach((post) => {
-    const slug = post.slug
+    const { slug } = post
 
-    actions.createPage({
+    createPage({
       path: slug,
       component: require.resolve('./src/components/singlePost.tsx'),
       context: {
