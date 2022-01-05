@@ -1,11 +1,10 @@
 import React from 'react'
+import Terminal from '../components/terminal'
 
 const Home = () => {
   return (
     <>
-      <p>
-        Hi, I am a <strong>Terminal Theme</strong>
-      </p>
+      <Terminal />
     </>
   )
 }
