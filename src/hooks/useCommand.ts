@@ -5,7 +5,7 @@ const useCommand = () => {
   commandFactory.init()
 
   const executeCommand = (name: string) => {
-    const command = commandFactory.commands.get(name)
+    const command = commandFactory.getCommand(name)
     command.execute()
   }
 
