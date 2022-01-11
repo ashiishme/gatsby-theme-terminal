@@ -2,10 +2,7 @@ import { CommandInterface } from '../interfaces/commandInterface'
 import * as commands from './commands/models'
 
 export class CommandFactory {
-  public commands: Map<string, CommandInterface>
-  constructor() {
-    this.commands = new Map()
-  }
+  constructor(private commands: Map<string, CommandInterface> = new Map()) {}
 
   private loadCommands(): void {
     Object.entries(commands).forEach(([name, Command]) => {
@@ -14,7 +11,11 @@ export class CommandFactory {
     })
   }
 
-  init(): void {
+  public getCommand(name: string): CommandInterface {
+    return this.commands.get(name)
+  }
+
+  public init(): void {
     this.loadCommands()
   }
 }
