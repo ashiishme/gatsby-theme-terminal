@@ -1,5 +1,9 @@
 import React from 'react'
+import useEventListener from '../../hooks/useEventListener'
+
 const ContentEditable = ({ className }) => {
+  const { elemRef } = useEventListener()
+
   return (
     <>
       <div
@@ -7,7 +11,7 @@ const ContentEditable = ({ className }) => {
         suppressContentEditableWarning
         contentEditable
         className={`w-auto text-sm font-normal ${className}`}
-        onInput={(event) => console.log(event)}
+        ref={elemRef}
       >
         whoami
       </div>
