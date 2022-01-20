@@ -3,7 +3,6 @@ import useCommand from '../hooks/useCommand'
 
 const useEventListener = () => {
   const elemRef = useRef<HTMLDivElement>()
-  const [showHistoryLog, setShowHistoryLog] = useState(false)
   const { executeCommand } = useCommand()
 
   useEffect(() => {
@@ -13,7 +12,6 @@ const useEventListener = () => {
       if (event.key === 'Enter') {
         const { textContent: command } = event.target
         executeCommand(command)
-        setShowHistoryLog(true)
       }
     }
 
@@ -21,11 +19,10 @@ const useEventListener = () => {
     return () => {
       if (ref) ref.removeEventListener('keydown', handleEnterKeyListener)
     }
-  }, [showHistoryLog])
+  }, [])
 
   return {
     elemRef,
-    showHistoryLog,
   }
 }
 export default useEventListener
