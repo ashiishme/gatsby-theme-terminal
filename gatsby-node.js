@@ -1,12 +1,35 @@
 const fs = require('fs')
+const path = require('path')
 
 exports.onPreBootstrap = ({ reporter }, options) => {
   const contentPath = options.contentPath || 'content'
+  const blogPath = options.blogPath || 'blog'
 
-  if (!fs.existsSync(contentPath)) {
-    reporter.info(`Creating ${contentPath} directory.`)
-    fs.mkdirSync(contentPath)
-  }
+  const directories = [contentPath, path.join(contentPath, blogPath)]
+
+  directories.forEach((directory) => {
+    if (!fs.existsSync(directory)) {
+      reporter.info(`Creating ${directory} folder.`)
+      fs.mkdirSync(directory)
+    }
+  })
+}
+
+exports.onCreateNode = ({ actions, node, getNode }) => {
+  const { createNodeField } = actions
+  const {
+    internal: { type },
+  } = node
+
+  if (type !== 'Mdx') return
+
+  const { sourceInstanceName } = getNode(node.parent)
+
+  createNodeField({
+    node,
+    name: 'postType',
+    value: sourceInstanceName,
+  })
 }
 
 exports.createPages = async ({ actions, graphql, reporter }, options) => {
@@ -18,6 +41,9 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
         nodes {
           id
           slug
+          fields {
+            postType
+          }
         }
       }
     }
@@ -28,16 +54,17 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
     return
   }
 
-  const posts = result.data.allMdx.nodes
+  const posts = result.data.allMdx.nodes.filter(
+    (node) => node.fields.postType === 'blog'
+  )
 
-  posts.forEach((post) => {
-    const { slug } = post
-
+  posts.forEach((node) => {
+    const { id, slug } = node
     createPage({
       path: slug,
-      component: require.resolve('./src/components/singlePost.tsx'),
+      component: require.resolve('./src/components/blog/singlePost.tsx'),
       context: {
-        id: post.id,
+        id: id,
       },
     })
   })
