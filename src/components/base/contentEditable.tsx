@@ -10,11 +10,9 @@ const ContentEditable = ({ className }) => {
         id="terminal-input"
         suppressContentEditableWarning
         contentEditable
-        className={`w-auto text-sm font-normal ${className}`}
+        className={`w-auto text-sm ${className}`}
         ref={elemRef}
-      >
-        whoami
-      </div>
+      ></div>
     </>
   )
 }
