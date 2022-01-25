@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import ContentEditable from '../base/contentEditable'
 
 const TerminalPrompt = () => {
   return (
     <>
-      <div className="flex flex-row terminal-prompt mb-4">
+      <div className="flex flex-row terminal-prompt">
         <p className="prompt text-sm mr-7 text-pacificBlue">
           <span className="username">[ ashiish</span>
           <span>@</span>
