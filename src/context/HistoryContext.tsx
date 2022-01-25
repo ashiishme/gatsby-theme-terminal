@@ -7,7 +7,7 @@ export const HistoryProvider = ({ children }) => {
   const [history, setHistory] = useState<HistoryProps[]>([])
 
   const addHistory = (value: HistoryProps) => {
-    setHistory([...history, value])
+    setHistory((prev) => [...prev, value])
   }
 
   return (
