@@ -1,3 +1,3 @@
 export interface CommandInterface {
-  execute(): void
+  execute(): Promise<string>
 }
