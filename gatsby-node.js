@@ -61,7 +61,7 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
   posts.forEach((node) => {
     const { id, slug } = node
     createPage({
-      path: slug,
+      path: `/blog/${slug}`,
       component: require.resolve('./src/components/blog/singlePost.tsx'),
       context: {
         id: id,
