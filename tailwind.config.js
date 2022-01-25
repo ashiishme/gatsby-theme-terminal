@@ -1,7 +1,7 @@
 module.exports = {
   content: [
-    './src/**/*.{js,jsx,ts,tsx}',
-    '../node_modules/gatsby-theme-terminal/src/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,jsx,ts,tsx,mdx}',
+    `./node_modules/gatsby-theme-terminal/src/**/*.{js,ts,jsx,tsx}`,
   ],
   theme: {
     extend: {
