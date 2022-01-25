@@ -14,7 +14,7 @@ To install this theme, you will need a starter Gatsby site. Make sure you have G
 
 Create a new site
 
-```
+```bash
 gatsby new my-app https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
@@ -26,7 +26,7 @@ Currently, the theme has no starter for itself so, you will need to install the 
 
 In your `my-app` install the theme.
 
-```
+```bash
 npm i git+https://github.com/ashiishme/gatsby-theme-terminal.git
 ```
 
@@ -34,7 +34,7 @@ npm i git+https://github.com/ashiishme/gatsby-theme-terminal.git
 
 Open `gatsby-config.js` file & add the theme in the plugin array.
 
-```
+```js
 module.exports = {
   ...
   plugins: [`gatsby-theme-terminal`],
@@ -45,7 +45,7 @@ Delete the `pages` directory ( including the `index.js` file ) from `src` direct
 
 ## Run the project
 
-```
+```bash
 gatsby develop
 ```
 
