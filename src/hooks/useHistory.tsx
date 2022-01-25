@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { HistoryContext } from '../context/HistoryContext'
 
 export type HistoryProps = {
