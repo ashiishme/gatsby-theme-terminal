@@ -8,11 +8,11 @@
 
 # Installation
 
-To install this theme, you will need a starter Gatsby site. Make sure you have Gatsby CLI installed.
+To install this theme, you will need a starter Gatsby site. Make sure you have [Gatsby CLI installed](https://www.gatsbyjs.com/docs/reference/gatsby-cli/).
 
 ## Getting started with Gatsby
 
-Create a new site
+Create a new site using Gatsby CLI:
 
 ```bash
 gatsby new my-app https://github.com/gatsbyjs/gatsby-starter-hello-world
