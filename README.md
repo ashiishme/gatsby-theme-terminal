@@ -8,7 +8,7 @@
 
 # Installation
 
-To install this theme, you will need a starter Gatsby site. Make sure you have [Gatsby CLI installed](https://www.gatsbyjs.com/docs/reference/gatsby-cli/).
+To install this theme, you will need a starter Gatsby site. Make sure you have [Gatsby CLI](https://www.gatsbyjs.com/docs/reference/gatsby-cli/) installed.
 
 ## Getting started with Gatsby
 
