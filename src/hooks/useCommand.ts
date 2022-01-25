@@ -8,12 +8,23 @@ const useCommand = () => {
   const commandFactory = new CommandFactory()
   commandFactory.init()
 
-  const executeCommand = useCallback((name: string) => {
+  const executeCommand = useCallback(async (name: string) => {
     const command = commandFactory.getCommand(name)
-    command.execute()
     addHistory({
       type: 'command',
       data: name,
+    })
+    if (!command) {
+      addHistory({
+        type: 'error',
+        data: `'${name}' command not found.`,
+      })
+      return
+    }
+    const commandOutput = await command.execute()
+    addHistory({
+      type: 'output',
+      data: commandOutput,
     })
   }, [])
 
