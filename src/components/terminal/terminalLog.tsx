@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { FC } from 'react'
 import TerminalPrompt from './terminalPrompt'
-
-const TerminalLog = () => {
+import { HistoryProps } from '../../hooks/useHistory'
+const TerminalLog: FC<{ logs: HistoryProps[] }> = ({ logs }) => {
   return (
     <>
-      <TerminalPrompt />
+      {logs &&
+        logs.map(({ type, data }, index: number) => (
+          <div className="flex flex-row mb-4" key={index}>
+            {type === 'command' ? (
+              <>
+                <TerminalPrompt />
+                <div>{data}</div>
+              </>
+            ) : (
+              <div>{data}</div>
+            )}
+          </div>
+        ))}
     </>
   )
 }
