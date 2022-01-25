@@ -10,8 +10,10 @@ const useEventListener = () => {
 
     const handleEnterKeyListener = (event) => {
       if (event.key === 'Enter') {
+        event.preventDefault()
         const { textContent: command } = event.target
         executeCommand(command)
+        ref.innerText = ''
       }
     }
 
