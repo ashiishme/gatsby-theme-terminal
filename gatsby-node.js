@@ -15,6 +15,20 @@ exports.onPreBootstrap = ({ reporter }, options) => {
   })
 }
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const blogTypes = `
+    type Mdx implements Node {
+      fields: Fields
+    }
+    
+    type Fields {
+      postType: String
+    }
+  `
+  createTypes(blogTypes)
+}
+
 exports.onCreateNode = ({ actions, node, getNode }) => {
   const { createNodeField } = actions
   const {
@@ -29,6 +43,7 @@ exports.onCreateNode = ({ actions, node, getNode }) => {
     node,
     name: 'postType',
     value: sourceInstanceName,
+    type: 'string',
   })
 }
 
