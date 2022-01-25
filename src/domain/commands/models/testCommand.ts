@@ -4,6 +4,6 @@ export default class TestCommand implements CommandInterface {
   constructor() {}
 
   async execute() {
-    console.log('TestCommand here')
+    return 'Test Command'
   }
 }
