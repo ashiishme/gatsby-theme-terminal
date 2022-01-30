@@ -1,15 +1,6 @@
 import { useContext } from 'react'
 import { HistoryContext } from '../context/HistoryContext'
-
-export type HistoryProps = {
-  type: 'command' | 'output' | 'error'
-  data: string
-}
-
-export type HistoryContextProps = {
-  history: HistoryProps[]
-  addHistory: (item: HistoryProps) => void
-}
+import { HistoryContextProps } from '../types'
 
 const useHistory = () => {
   const { history, addHistory } =
