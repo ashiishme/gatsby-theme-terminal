@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-import { HistoryContextProps, HistoryProps } from '../hooks/useHistory'
+import { HistoryContextProps, HistoryProps } from '../types'
 
 export const HistoryContext = createContext<HistoryContextProps>(undefined)
 
