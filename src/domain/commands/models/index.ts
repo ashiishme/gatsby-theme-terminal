@@ -1,2 +1,2 @@
-export { default as TestCommand } from './testCommand'
+export { default as LS } from './ls'
 export { default as WhoAmI } from './whoami'
