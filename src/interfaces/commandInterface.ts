@@ -1,3 +1,4 @@
+import { CommandOutputProps } from '../types'
 export interface CommandInterface {
-  execute(): Promise<string>
+  execute(): Promise<CommandOutputProps>
 }
