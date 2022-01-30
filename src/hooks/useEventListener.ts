@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import useCommand from '../hooks/useCommand'
 
 const useEventListener = () => {
