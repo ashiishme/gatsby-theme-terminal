@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { CommandFactory } from '../domain/commandFactory'
+import { CommandFactory } from '../domain/commands/commandFactory'
 
 import useHistory from './useHistory'
 
@@ -12,20 +12,22 @@ const useCommand = () => {
     const command = commandFactory.getCommand(name)
     addHistory({
       type: 'command',
-      data: name,
+      output: name,
     })
     if (!command) {
       addHistory({
         type: 'error',
-        data: `'${name}' command not found.`,
+        output: `'${name}' command not found.`,
       })
       return
     }
     const commandOutput = await command.execute()
-    addHistory({
-      type: 'output',
-      data: commandOutput,
-    })
+    if (commandOutput) {
+      addHistory({
+        type: 'output',
+        output: commandOutput,
+      })
+    }
   }, [])
 
   return {
