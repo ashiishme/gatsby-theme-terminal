@@ -1,30 +1,52 @@
 import { CommandInterface } from '../../../interfaces/commandInterface'
 import { CommandOutputProps } from '../../../types'
+import GraphQLClient from '../../../utils/graphqlClient'
 
 export default class WhoAmI implements CommandInterface {
   constructor() {}
 
-  private toReact(): CommandOutputProps {
-    const data = {
-      component: 'TableView',
-      data: [
-        { key: 'Name', value: 'Ashish Yadav' },
-        { key: 'Location', value: 'Berlin, Germany' },
-        { key: 'Designation', value: 'Software Engineer' },
-        { key: 'Working at', value: 'Lendis' },
-        { key: 'Favorite Editor', value: 'Vs Code' },
-        { key: 'Programming Languages', value: 'JavaScript, TypeScript & C++' },
-        {
-          key: 'Talks About',
-          value: `#node, #react, #serverless, #test-driven-development, #open-source, #coding-standards, #writing-secure-code,
-        #software-engineering & #tech-community`,
-        },
-      ],
+  private async getAuthorInfo(): Promise<{ [key: string]: string } | null> {
+    const result = await GraphQLClient`
+      query getOwnerDetails {
+        mdx(fileAbsolutePath: {regex: "/index.mdx/"}) {
+          frontmatter {
+            Name
+            Location
+            Designation
+            Working_at
+            Favorite_Editor
+            Programming_Languages
+            Talks_About
+          }
+        }
+      }
+    `
+
+    if (!result.mdx) return null
+
+    const authorInfo = result.mdx.frontmatter
+    return authorInfo
+  }
+
+  private async toReact(): Promise<CommandOutputProps> {
+    const result = await this.getAuthorInfo()
+
+    if (!result) {
+      throw new Error('Cannot find author information.')
     }
-    return data
+
+    const mappedAuthorInfo = Object.entries(result).map(([key, value]) => ({
+      key: key.replace('_', ' '),
+      value,
+    }))
+
+    return {
+      component: 'TableView',
+      data: [...mappedAuthorInfo],
+    }
   }
 
   async execute(): Promise<CommandOutputProps> {
-    return this.toReact()
+    return await this.toReact()
   }
 }
