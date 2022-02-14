@@ -12,6 +12,9 @@ export class CommandFactory {
   }
 
   public getCommand(name: string): CommandInterface {
+    if (!this.commands.get(name)) {
+      throw new Error(`'${name}' command not found.`)
+    }
     return this.commands.get(name)
   }
 
