@@ -15,7 +15,14 @@ exports.onPreBootstrap = ({ reporter }, options) => {
   })
 }
 
-exports.createSchemaCustomization = ({ actions }) => {
+function findDepthOfFileOrDir(node) {
+  const { absolutePath } = node
+  const absPath = absolutePath.split('/content')[1]
+  const pathArr = absPath.split('/').filter((item) => item)
+  return pathArr.length
+}
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
   const blogTypes = `
     type Mdx implements Node {
@@ -26,7 +33,30 @@ exports.createSchemaCustomization = ({ actions }) => {
       postType: String
     }
   `
+
+  const directoryTypes = `
+    type Directory implements Node {
+      fields: Fields
+    }
+
+    type Fields {
+      depth: String!
+    }
+  `
+
+  const FileTypes = `
+    type File implements Node {
+      fields: Fields
+    }
+
+    type Fields {
+      depth: String!
+    }
+  `
+
   createTypes(blogTypes)
+  createTypes(directoryTypes)
+  createTypes(FileTypes)
 }
 
 exports.onCreateNode = ({ actions, node, getNode }) => {
@@ -35,16 +65,26 @@ exports.onCreateNode = ({ actions, node, getNode }) => {
     internal: { type },
   } = node
 
-  if (type !== 'Mdx') return
+  if (type === 'Directory' || type === 'File') {
+    const depth = findDepthOfFileOrDir(node)
+    createNodeField({
+      node,
+      name: 'depth',
+      value: depth,
+      type: 'string',
+    })
+  }
 
-  const { sourceInstanceName } = getNode(node.parent)
+  if (type === 'Mdx') {
+    const { sourceInstanceName } = getNode(node.parent)
 
-  createNodeField({
-    node,
-    name: 'postType',
-    value: sourceInstanceName,
-    type: 'string',
-  })
+    createNodeField({
+      node,
+      name: 'postType',
+      value: sourceInstanceName,
+      type: 'string',
+    })
+  }
 }
 
 exports.createPages = async ({ actions, graphql, reporter }, options) => {
